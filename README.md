@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Responder AI - AI-Powered Customer Support Responder
+
+<p align="center">
+  <img src="https://github.com/vibhu-thankii/ai-support-responder-backend/blob/main/ai-support-responder-dashboard.png" alt="Responder AI Dashboard" width="100%">
+</p>
+
+<p align="center">
+  A full-stack, AI-powered SaaS application designed to streamline customer support by generating intelligent draft responses to user queries.
+  <br />
+  <a href="https://ai-support-responder-frontend-fbk6ikkdh-vibhu-thankis-projects.vercel.app/"><strong>View Live Demo »</strong></a>
+  <br />
+  <br />
+  <a href="https://github.com/vibhu-thankii/ai-support-responder-frontend">Frontend Repo</a>
+  ·
+  <a href="https://github.com/vibhu-thankii/ai-support-responder-backend">Backend Repo</a>
+</p>
+
+---
+
+## About The Project
+
+In today's fast-paced digital world, businesses often struggle with the sheer volume of customer inquiries. Manually responding to each query is time-consuming, costly, and prone to inconsistency.
+
+**Responder AI** tackles this challenge head-on. It's a web application where a business can see incoming customer queries and, with a single click, generate a well-crafted, context-aware draft response. The AI uses a knowledge base to find the most relevant information, which a support agent can then review, edit, and send in a fraction of the time.
+
+This project is a demonstration of building a modern, full-stack application that solves a tangible business problem, showcasing skills in both frontend and backend development, as well as deployment and product thinking.
+
+### Key Features:
+
+* **Interactive Dashboard:** A clean, modern, and fully responsive UI for managing customer queries.
+* **AI-Powered Drafts:** Generates context-aware responses by searching a knowledge base for keywords.
+* **Confidence Score:** Each AI draft comes with a confidence score, helping agents gauge the relevance of the suggestion.
+* **Light & Dark Mode:** A professional, polished UI with theme toggling.
+* **Full-Stack Architecture:** Decoupled frontend and backend for scalability and maintainability.
+
+---
+
+## Built With
+
+This project leverages a modern and powerful tech stack:
+
+* **Frontend:**
+    * [Next.js](https://nextjs.org/) (React Framework)
+    * [TypeScript](https://www.typescriptlang.org/)
+    * [Tailwind CSS](https://tailwindcss.com/)
+    * [Shadcn/ui](https://ui.shadcn.com/) (Component Library)
+* **Backend:**
+    * [Python 3](https://www.python.org/)
+    * [FastAPI](https://fastapi.tiangolo.com/) (High-performance API Framework)
+    * [Pydantic](https://pydantic.dev/) (Data Validation)
+* **Deployment:**
+    * Frontend hosted on [Vercel](https://vercel.com/)
+    * Backend hosted on [Render](https://render.com/)
+
+---
 
 ## Getting Started
 
-First, run the development server:
+To get a local copy up and running, follow these simple steps.
+
+### Prerequisites
+
+Make sure you have the following installed:
+* Node.js (v18 or later)
+* npm
+* Python 3.10 or later
+
+### Installation & Setup
+
+#### 1. Backend (`ai-support-responder-backend`)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# Clone the backend repository
+git clone [https://github.com/vibhu-thankii/ai-support-responder-backend.git](https://github.com/vibhu-thankii/ai-support-responder-backend.git)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Navigate to the project directory
+cd ai-support-responder-backend
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Create and activate a virtual environment
+python3 -m venv venv
+source venv/bin/activate
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Install the required packages
+pip install -r requirements.txt
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Run the backend server
+uvicorn main:app --reload

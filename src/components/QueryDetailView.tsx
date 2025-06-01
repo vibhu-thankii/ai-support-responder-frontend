@@ -9,7 +9,6 @@ import { Progress } from "@/components/ui/progress"; // <-- Import Progress
 import { toast } from "sonner";
 import { Copy } from "lucide-react";
 import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
 
 type Query = {
   id: string; sender: string; subject: string; body: string;

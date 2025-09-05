@@ -2,13 +2,15 @@
 
 import { createClient } from '@/lib/supabase/client'
 import { Auth } from '@supabase/auth-ui-react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { Suspense, useEffect } from 'react'
 import { Sparkles, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-export const dynamic = 'force-dynamic';
-export default function LoginPage() {
+import { useSearchParams } from 'next/navigation'
+
+// Separate component to handle search params within Suspense
+function LoginContent() {
   const supabase = createClient()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -16,41 +18,35 @@ export default function LoginPage() {
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session) {
-        const redirectPath = searchParams.get('redirect_path');
-        if (redirectPath) {
-          router.push(redirectPath);
-        } else {
-          router.push('/dashboard/overview'); 
-        }
-        router.refresh();
+        const redirectPath = searchParams.get('redirect_path')
+        router.push(redirectPath || '/dashboard-overview')
+        router.refresh()
       }
-    });
+    })
 
     return () => {
-      subscription.unsubscribe();
-    };
-  }, [router, supabase.auth, searchParams]);
+      subscription.unsubscribe()
+    }
+  }, [router, supabase.auth, searchParams])
 
   useEffect(() => {
     const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { session } } = await supabase.auth.getSession()
       if (session) {
-        const redirectPath = searchParams.get('redirect_path');
-        router.push(redirectPath || '/dashboard/overview');
+        const redirectPath = searchParams.get('redirect_path')
+        router.push(redirectPath || '/dashboard-overview')
       }
-    };
-    checkSession();
-  }, [router, supabase.auth, searchParams]);
-
+    }
+    checkSession()
+  }, [router, supabase.auth, searchParams])
 
   const getRedirectTo = () => {
     if (typeof window !== 'undefined') {
-      return `${window.location.origin}/auth/callback`;
+      return `${window.location.origin}/auth/callback`
     }
-    return 'http://localhost:3000/auth/callback';
-  };
-  
-  // Custom theme for Supabase Auth UI to match the landing page
+    return 'http://localhost:3000/auth/callback'
+  }
+
   const customTheme = {
     default: {
       colors: {
@@ -90,24 +86,24 @@ export default function LoginPage() {
         <div className="absolute top-40 right-10 w-96 h-96 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
         <div className="absolute bottom-20 left-1/2 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '4s' }}></div>
       </div>
-      
+
       <header className="absolute top-0 left-0 w-full z-10">
         <div className="container mx-auto px-6 sm:px-8 py-6 flex justify-between items-center">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="relative">
-                <Sparkles className="h-8 w-8 text-cyan-400" />
-                <div className="absolute inset-0 h-8 w-8 bg-cyan-400 blur-xl opacity-50"></div>
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-                Responder AI
-              </span>
+          <Link href="/" className="flex items-center gap-3">
+            <div className="relative">
+              <Sparkles className="h-8 w-8 text-cyan-400" />
+              <div className="absolute inset-0 h-8 w-8 bg-cyan-400 blur-xl opacity-50"></div>
+            </div>
+            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+              Responder AI
+            </span>
+          </Link>
+          <Button asChild variant="ghost" className="text-slate-300 hover:text-white hover:bg-white/5">
+            <Link href="/">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Home
             </Link>
-             <Button asChild variant="ghost" className="text-slate-300 hover:text-white hover:bg-white/5">
-                <Link href="/">
-                    <ArrowLeft className="h-4 w-4 mr-2" />
-                    Back to Home
-                </Link>
-             </Button>
+          </Button>
         </div>
       </header>
 
@@ -137,5 +133,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   )
 }

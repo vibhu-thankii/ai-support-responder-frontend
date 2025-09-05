@@ -19,7 +19,7 @@ function LoginContent() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session) {
         const redirectPath = searchParams.get('redirect_path')
-        router.push(redirectPath || '/dashboard-overview')
+        router.push(redirectPath || '/dashboard/overview')
         router.refresh()
       }
     })
